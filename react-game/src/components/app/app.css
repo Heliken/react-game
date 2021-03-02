@@ -1,0 +1,21 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  outline:none;
+}
+.app{
+  min-height:100vh;
+  display: flex;
+  flex-direction: column;
+}
+.container{
+  max-width: 1400px;
+  padding:0 20px;
+  margin:0 auto;
+}
+.app__body{
+  flex:1;
+  display: flex;
+  
+}

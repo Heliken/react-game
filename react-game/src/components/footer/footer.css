@@ -1,0 +1,16 @@
+.footer{
+  background-color: #9ba1ab;
+  padding: 20px;
+  margin-top:auto;
+}
+.footer__wrap{
+  display: flex;
+  justify-content: space-between;
+}
+.footer__link{
+  height:40px;
+}
+.footer__link img{
+  height:100%;
+  display: block;
+}

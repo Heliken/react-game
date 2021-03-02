@@ -1,0 +1,16 @@
+.menu{
+  background-color: #9ba1ab;
+  margin:auto;
+  padding: 40px;
+  text-align: center;
+  width: 600px;
+  max-width: 100%;
+}
+.menu__unit{
+  cursor:pointer;
+  margin-bottom: 20px;
+}
+
+.menu__unit:last-child{
+  margin-bottom: 0;
+}
