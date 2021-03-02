@@ -1,0 +1,27 @@
+.game{
+  width:100%;
+}
+.game__field{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap:20px;
+}
+.game__field-section{
+  background-color: #fff;
+  position: relative;
+  transition: background-color .3s ease-in-out;
+
+}
+.game__field-section:before{
+  content:"";
+  display: block;
+  padding-top:100%;
+}
+.game__field-section--x{
+  background-color: red;
+}
+.game__field-section--o{
+  background-color: blue;
+}
