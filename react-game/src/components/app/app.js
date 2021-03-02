@@ -2,17 +2,16 @@ import React, {Component} from 'react';
 
 import Footer from '../footer';
 import Menu from '../menu';
-import Settings from '../settings';
 
 import './app.css';
 
 export default class App extends Component {
   state={
-    activeMenu:"settings",
+    activeSection:"menu",
     hasSavedGame:false,
     settings:{
-      mode:'light',
-      startWith:"X",
+      altMode:false,
+      altStartWith:false,
       withAI:false,
     },
     sound:{
@@ -26,15 +25,33 @@ export default class App extends Component {
       }
     }
   }
+  changeScreen = (val) => {
+    this.setState(({activeSection}) => {
+      return {
+        activeSection: val,
+      }
+    })
+    
+  }
+  changeSetting = (e) => {
+    this.setState(({settings}) => {
+      let newSettings = {...settings,[e.target.name]:e.target.checked}
+      return {
+        settings:newSettings
+      }
+    })
+  }
   render(){
-    const {activeMenu, hasSavedGame } = this.state;
-    const { settings } = this.state;
+    const {activeSection, settings } = this.state;
+
     return (
       <div className="app">
         <div className="app__body">
-          <Menu 
-            activeMenu = {activeMenu}
-            hasSavedGame={hasSavedGame}/>
+          <Menu
+            activeSection = {activeSection}
+            changeScreen={this.changeScreen}
+            settings={settings}
+            changeSetting={this.changeSetting}/>
         </div>
         <Footer />
       </div>

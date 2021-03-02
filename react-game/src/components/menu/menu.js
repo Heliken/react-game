@@ -7,27 +7,26 @@ import './menu.css';
 
 export default class Menu extends Component {
   render() {
-    const {activeMenu, hasSavedGame } = this.props;
-    switch(activeMenu){
+    const {activeSection, changeScreen, changeSetting, settings } = this.props;
+    let currentSection;
+    switch(activeSection){
       case 'main':
-        return(
-          <div className="menu">
-            <MainMenu />
-          </div>
-        )
+        currentSection = <MainMenu changeScreen={changeScreen} />
+        break;
       case 'settings':
-        return(
-          <div className="menu">
-            <Settings/>
-          </div>
-        )
-        
+        currentSection = <Settings
+              changeScreen={changeScreen}
+              settings={settings}
+              changeSetting={changeSetting}
+            />
+        break;
       default:
-        return(
-          <div className="menu">
-            <MainMenu />
-          </div>
-        )
+        currentSection = <MainMenu changeScreen={changeScreen} />
     }
+    return(
+      <div className="menu">
+        {currentSection}
+      </div>
+    )
   }
 }
