@@ -12,6 +12,8 @@ const vocabulary ={
     tieMessageTemplate:'Это ничья!',
     winMessage:"победил!",
     records:"Рекорды",
+    music:"Музыка",
+    sounds:"Звуки",
     table:{
       tableHeader:['№','Победитель',"Ходы"],
       tableMessage:'Пока нет данных',
@@ -44,6 +46,8 @@ const vocabulary ={
     tieMessageTemplate:"It's a tie!",
     winMessage:"wins!",
     records:"Records",
+    music:"Music",
+    sounds:"Sounds",
     table:{
       tableHeader:['№','Winner',"Moves"],
       tableMessage:'No data yet',

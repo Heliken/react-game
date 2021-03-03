@@ -3,6 +3,7 @@ import MainMenu from '../main-menu';
 import Settings from '../settings';
 import Game from '../game';
 import Records from '../records';
+import Sound from '../sound';
 
 import './menu.css';
 
@@ -23,7 +24,7 @@ export default class Menu extends Component {
   }
 
   render() {
-    const {activeSection, hasSavedGame, changeScreen, changeSetting, settings, gameField, updateField, newGame, gameMessage, gameEnded, elementsToHighlight, autoplay, moves, startedAutoplay, records, vocabulary, lang } = this.props;
+    const {activeSection, hasSavedGame, changeScreen, changeSetting, settings, gameField, updateField, newGame, gameMessage, gameEnded, elementsToHighlight, autoplay, moves, startedAutoplay, records, vocabulary, lang, music, effects, setSoundValue} = this.props;
     let currentSection;
     switch(activeSection){
       case 'main':
@@ -77,6 +78,11 @@ export default class Menu extends Component {
       <div className="menu">
         <div className="menu__fullscreen" onClick={() =>{this.toggleFullScreen()}}></div>
         {currentSection}
+        <Sound vocabulary={vocabulary}
+          lang={lang}
+          music={music}
+          effects={effects}
+          setSoundValue={setSoundValue}/>
       </div>
     )
   }

@@ -29,16 +29,8 @@ export default class App extends Component {
       currentPlayer:'X',
       field:new Array(9).fill(null),
       records:[],
-      sound:{
-        music:{
-          mute:false,
-          value:1,
-        },
-        effects:{
-          mute:false,
-          value:1,
-        }
-      }
+      music:1,
+      effects:1,
     }
     const savedState = JSON.parse(localStorage.getItem('heliken-tic-tac-toe-data'));
     const appliedState = savedState ? savedState : defaultState;
@@ -213,7 +205,7 @@ export default class App extends Component {
       return {
         theme: theme === 'light' ? 'dark' : 'light'
       }
-    }, () => {;
+    }, () => {
       this.updateLocalStorage();
     })
   }
@@ -225,6 +217,25 @@ export default class App extends Component {
         currentPlayer: nextPlayer
       }
     },() => {
+      this.updateLocalStorage();
+    })
+  }
+  setSoundValue = (e) => {
+    const target = e.target;
+    const name = target.name;
+    const type = target.type;
+    let newValue;
+    if(type === 'checkbox'){
+      newValue = e.target.checked ? 1 : 0;
+    } else {
+      newValue = parseFloat(target.value);
+    }
+    this.setState(()=>{
+      return{
+        [name]:newValue,
+      }
+    },()=>{
+      console.log(this.state[name]);
       this.updateLocalStorage();
     })
   }
@@ -278,7 +289,7 @@ export default class App extends Component {
   }
   
   render(){
-    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme, startedAutoplay, records, vocabulary} = this.state;
+    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme, startedAutoplay, records, vocabulary, music, effects} = this.state;
     const lang = this.state.settings.lang;
     return (
       <div className="app" data-theme={theme}>
@@ -302,6 +313,9 @@ export default class App extends Component {
             records={records}
             vocabulary={vocabulary}
             lang={lang}
+            music={music}
+            effects={effects}
+            setSoundValue={this.setSoundValue}
             changeSetting={this.changeSetting}/>
         </div>
         <Footer />
