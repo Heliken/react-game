@@ -3,10 +3,11 @@ import React, {Component} from 'react';
 import './game.css';
 
 export default class Game extends Component {
+  
   render(){
-    const {gameField, changeScreen, updateField} = this.props;
+    const {gameField, changeScreen, updateField, gameMessage, gameEnded} = this.props;
     const fields = gameField.map((item,index) => {
-      const canClick = item === '';
+      const canClick = !item ;
       let additionalClass;
       switch(item){
         case 'X':
@@ -21,18 +22,19 @@ export default class Game extends Component {
       return (
         <div className={`game__field-section ${additionalClass}`}
           key={index} 
-          onClick={canClick ? () => updateField(index) : undefined}
+          onClick={canClick && !gameEnded ? () => updateField(index) : undefined}
           ></div>
       )
     })
     return(
       <div className="game">
         <div className="game__header">
-          <div className="game__back" onClick={()=>{changeScreen('menu')}}>Back</div>
+          <div className="game__back" onClick={()=>{changeScreen('menu');}}>Back</div>
         </div>
         <div className="game__field">
           {fields}
         </div>
+        <div className="game__message">{gameMessage}</div>
       </div>
     )
   }

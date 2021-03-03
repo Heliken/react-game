@@ -8,13 +8,14 @@ import './menu.css';
 
 export default class Menu extends Component {
   render() {
-    const {activeSection, changeScreen, changeSetting, settings, gameField, updateField, newGame } = this.props;
+    const {activeSection, hasSavedGame, changeScreen, changeSetting, settings, gameField, updateField, newGame, gameMessage, gameEnded} = this.props;
     let currentSection;
     switch(activeSection){
       case 'main':
         currentSection = <MainMenu 
           changeScreen={changeScreen}
-          newGame={newGame} />
+          newGame={newGame}
+          hasSavedGame={hasSavedGame} />
         break;
       case 'settings':
         currentSection = <Settings
@@ -28,12 +29,15 @@ export default class Menu extends Component {
           changeScreen={changeScreen}
           gameField={gameField}
           updateField={updateField}
+          gameMessage={gameMessage}
+          gameEnded={gameEnded}
         />
         break;
       default:
         currentSection = <MainMenu 
           changeScreen={changeScreen}
-          newGame={newGame} />
+          newGame={newGame}
+          hasSavedGame={hasSavedGame} />
     }
     return(
       <div className="menu">
