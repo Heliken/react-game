@@ -128,6 +128,25 @@ export default class App extends Component {
       })
     }
   }
+  checkIfRecord = (recordObject) => {
+    if(this.state.records.length > 9){
+      if(recordObject.moves < this.state.records[this.state.records.length - 1]){
+        this.addNewRecord(recordObject);
+      }
+    } else{
+      this.addNewRecord(recordObject);
+    }
+  }
+  addNewRecord = (recordObject) =>{
+    let newRecords = [...this.state.records];
+    newRecords.push(recordObject);
+    newRecords.sort((a,b) => a.moves - b.moves);
+    this.setState(()=>{
+      return{
+        records:newRecords.slice(0,9)
+      }
+    })
+  }
   updateField = (position) => {
     this.setState(({field}) => {
       const newArray = [...field.slice(0, position),this.state.currentPlayer, ...field.slice(position + 1)];
@@ -170,6 +189,9 @@ export default class App extends Component {
         gameMessage: tie ? 'Its a tie!' : `Player ${winCondition.winner} won!`
       }
     },() => {
+      if(!tie && winCondition){
+        this.checkIfRecord({player:winCondition.winner,moves:this.state.moves});
+      }
       this.updateLocalStorage();
     })
   }
@@ -249,7 +271,7 @@ export default class App extends Component {
   }
   
   render(){
-    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme, startedAutoplay} = this.state;
+    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme, startedAutoplay, records} = this.state;
     return (
       <div className="app" data-theme={theme}>
         <Hotkeys/>
@@ -268,6 +290,7 @@ export default class App extends Component {
             moves = {moves}
             gameMessage = {gameMessage}
             startedAutoplay = {startedAutoplay}
+            records={records}
             changeSetting={this.changeSetting}/>
         </div>
         <Footer />

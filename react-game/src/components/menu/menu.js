@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import MainMenu from '../main-menu';
 import Settings from '../settings';
 import Game from '../game';
+import Records from '../records';
 
 import './menu.css';
 
@@ -22,7 +23,7 @@ export default class Menu extends Component {
   }
 
   render() {
-    const {activeSection, hasSavedGame, changeScreen, changeSetting, settings, gameField, updateField, newGame, gameMessage, gameEnded, elementsToHighlight, autoplay, moves, startedAutoplay } = this.props;
+    const {activeSection, hasSavedGame, changeScreen, changeSetting, settings, gameField, updateField, newGame, gameMessage, gameEnded, elementsToHighlight, autoplay, moves, startedAutoplay, records } = this.props;
     let currentSection;
     switch(activeSection){
       case 'main':
@@ -50,6 +51,11 @@ export default class Menu extends Component {
           startedAutoplay={startedAutoplay}
           elementsToHighlight={elementsToHighlight}
         />
+        break;
+      case 'records':
+        currentSection = <Records 
+          records={records}
+          changeScreen={changeScreen}/>
         break;
       default:
         currentSection = <MainMenu 

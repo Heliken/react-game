@@ -17,6 +17,9 @@ export default class MainMenu extends Component {
         <div className="menu__unit" >
           <span className="underline" onClick={() => { changeScreen('settings') }}>Settings</span>
         </div>
+        <div className="menu__unit" >
+          <span className="underline" onClick={() => { changeScreen('records') }}>Records</span>
+        </div>
       </div>
     )
   }
