@@ -224,7 +224,7 @@ export default class App extends Component {
   }
   
   render(){
-    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme} = this.state;
+    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme, startedAutoplay} = this.state;
     return (
       <div className="app" data-theme={theme}>
         <div className="app__body">
@@ -241,6 +241,7 @@ export default class App extends Component {
             autoplay={this.autoplay}
             moves = {moves}
             gameMessage = {gameMessage}
+            startedAutoplay = {startedAutoplay}
             changeSetting={this.changeSetting}/>
         </div>
         <Footer />

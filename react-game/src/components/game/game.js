@@ -10,7 +10,7 @@ export default class Game extends Component {
     },200)
   }
   render(){
-    const {gameField, changeScreen, updateField, gameMessage, gameEnded, elementsToHighlight, autoplay, moves } = this.props;
+    const {gameField, changeScreen, updateField, gameMessage, gameEnded, elementsToHighlight, autoplay, moves, startedAutoplay } = this.props;
     const fields = gameField.map((item,index) => {
       const canClick = !item ;
       let additionalClass='';
@@ -30,7 +30,7 @@ export default class Game extends Component {
       return (
         <div className={`game__field-section${additionalClass}`}
           key={index} 
-          onClick={canClick && !gameEnded ? () => updateField(index) : this.shakeTile}
+          onClick={canClick && !gameEnded && !startedAutoplay ? () => updateField(index) : this.shakeTile}
           ></div>
       )
     })
