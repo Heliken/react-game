@@ -6,34 +6,42 @@ import Menu from '../menu';
 import './app.css';
 
 export default class App extends Component {
-  
-  state={
-    activeSection:"main",
-    hasSavedGame:false,
-    theme:'light',
-    settings:{
-      altMode:false,
-      altStartWith:false,
-      withAI:false,
-    },
-    moves:0,
-    startedAutoplay: false,
-    gameEnded: false,
-    gameMessage:"Player X turn",
-    elementsToHighlight:[],
-    startPlayer:'X',
-    currentPlayer:'X',
-    field:new Array(9).fill(null),
-    sound:{
-      music:{
-        mute:false,
-        value:1,
+  componentWillMount() {
+    const defaultState = {
+      activeSection:"main",
+      hasSavedGame:false,
+      theme:'light',
+      settings:{
+        altMode:false,
+        altStartWith:false,
+        withAI:false,
       },
-      effects:{
-        mute:false,
-        value:1,
+      moves:0,
+      startedAutoplay: false,
+      gameEnded: false,
+      gameMessage:"Player X turn",
+      elementsToHighlight:[],
+      startPlayer:'X',
+      currentPlayer:'X',
+      field:new Array(9).fill(null),
+      sound:{
+        music:{
+          mute:false,
+          value:1,
+        },
+        effects:{
+          mute:false,
+          value:1,
+        }
       }
     }
+    const savedState = JSON.parse(localStorage.getItem('heliken-tic-tac-toe-data'));
+    const appliedState = savedState ? savedState : defaultState;
+    this.setState(()=>{
+      return appliedState
+    },() => {
+      this.updateLocalStorage();
+    })
   }
 
   autoplayInterval
@@ -45,6 +53,8 @@ export default class App extends Component {
         return{
           startedAutoplay: true
         }
+      },() => {
+        this.updateLocalStorage();
       })
       this.autoplayInterval = setInterval(() => {
         const emptyField = this.getRandomEmptyField();
@@ -53,6 +63,9 @@ export default class App extends Component {
         }
       }, 500)
     }
+  }
+  updateLocalStorage = () => {
+    localStorage.setItem('heliken-tic-tac-toe-data',JSON.stringify(this.state));
   }
   getRandomEmptyField = () => {
     const emptyFields = this.state.field.map((item, index) => item === null ? index: null ).filter((item)=> item !== null);
@@ -75,6 +88,8 @@ export default class App extends Component {
         gameMessage:`Player ${this.state.startPlayer} turn`,
         field: new Array(9).fill(null),
       }
+    },() => {
+      this.updateLocalStorage();
     })
   }
   changeScreen = (val) => {
@@ -83,6 +98,8 @@ export default class App extends Component {
         return {
           activeSection: val,
         }
+      },() => {
+        this.updateLocalStorage();
       })
     }
   }
@@ -106,6 +123,7 @@ export default class App extends Component {
       } else {
         this.endGame(winCondition);
       }
+      this.updateLocalStorage();
     })
   }
   updateMoves = () => {
@@ -113,6 +131,8 @@ export default class App extends Component {
       return{
        moves: moves + 1
       }
+    },() => {
+      this.updateLocalStorage();
     })
   }
   endGame = (winCondition, tie = false) => {
@@ -124,6 +144,8 @@ export default class App extends Component {
         elementsToHighlight: tie ? [] : winCondition.combination,
         gameMessage: tie ? 'Its a tie!' : `Player ${winCondition.winner} won!`
       }
+    },() => {
+      this.updateLocalStorage();
     })
   }
   switchStartPlayer = () => {
@@ -132,6 +154,8 @@ export default class App extends Component {
       return{
         startPlayer: newStartPlayer,
       }
+    },() => {
+      this.updateLocalStorage();
     })
   }
   switchTheme = () => {
@@ -139,8 +163,8 @@ export default class App extends Component {
       return {
         theme: theme === 'light' ? 'dark' : 'light'
       }
-    }, () => {
-      document.documentElement.setAttribute('data-theme',this.state.theme);
+    }, () => {;
+      this.updateLocalStorage();
     })
   }
   switchCurrentPlayer = () => {
@@ -150,6 +174,8 @@ export default class App extends Component {
         gameMessage: `Player ${nextPlayer} turn`,
         currentPlayer: nextPlayer
       }
+    },() => {
+      this.updateLocalStorage();
     })
   }
   changeSetting = (e) => {
@@ -168,6 +194,7 @@ export default class App extends Component {
       if (e.target.name === 'altMode'){
         this.switchTheme();
       }
+      this.updateLocalStorage();
     })
   }
   
@@ -197,9 +224,9 @@ export default class App extends Component {
   }
   
   render(){
-    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves} = this.state;
+    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme} = this.state;
     return (
-      <div className="app">
+      <div className="app" data-theme={theme}>
         <div className="app__body">
           <Menu
             gameField={field}
