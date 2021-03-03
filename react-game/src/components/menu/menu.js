@@ -22,7 +22,7 @@ export default class Menu extends Component {
   }
 
   render() {
-    const {activeSection, hasSavedGame, changeScreen, changeSetting, settings, gameField, updateField, newGame, gameMessage, gameEnded, elementsToHighlight, autoplay} = this.props;
+    const {activeSection, hasSavedGame, changeScreen, changeSetting, settings, gameField, updateField, newGame, gameMessage, gameEnded, elementsToHighlight, autoplay, moves } = this.props;
     let currentSection;
     switch(activeSection){
       case 'main':
@@ -42,6 +42,7 @@ export default class Menu extends Component {
         currentSection = <Game
           changeScreen={changeScreen}
           autoplay={autoplay}
+          moves={moves}
           gameField={gameField}
           updateField={updateField}
           gameMessage={gameMessage}

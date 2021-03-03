@@ -16,6 +16,7 @@ export default class App extends Component {
       altStartWith:false,
       withAI:false,
     },
+    moves:0,
     startedAutoplay: false,
     gameEnded: false,
     gameMessage:"Player X turn",
@@ -38,6 +39,7 @@ export default class App extends Component {
   autoplayInterval
 
   autoplay = () => {
+    this.resetGame();
     if(!this.state.startedAutoplay){
       this.setState(() => {
         return{
@@ -64,6 +66,7 @@ export default class App extends Component {
   resetGame = () => {
     this.setState(() => {
       return {
+        moves:0,
         startedAutoplay:false,
         elementsToHighlight:[],
         gameEnded:false,
@@ -75,12 +78,13 @@ export default class App extends Component {
     })
   }
   changeScreen = (val) => {
-    this.setState(() => {
-      return {
-        activeSection: val,
-      }
-    })
-    
+    if(!this.state.startedAutoplay){
+      this.setState(() => {
+        return {
+          activeSection: val,
+        }
+      })
+    }
   }
   updateField = (position) => {
     this.setState(({field}) => {
@@ -91,6 +95,7 @@ export default class App extends Component {
         field: newArray,
       }
     },()=>{
+      this.updateMoves();
       let winCondition = this.checkWinCondition();
       if(!winCondition){
         if(this.state.field.indexOf(null) < 0 ){
@@ -103,10 +108,18 @@ export default class App extends Component {
       }
     })
   }
+  updateMoves = () => {
+    this.setState(({moves})=>{
+      return{
+       moves: moves + 1
+      }
+    })
+  }
   endGame = (winCondition, tie = false) => {
     if(this.autoplayInterval) window.clearInterval(this.autoplayInterval);
     this.setState(() => {
       return {
+        startedAutoplay: false,
         gameEnded:true,
         elementsToHighlight: tie ? [] : winCondition.combination,
         gameMessage: tie ? 'Its a tie!' : `Player ${winCondition.winner} won!`
@@ -184,7 +197,7 @@ export default class App extends Component {
   }
   
   render(){
-    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight} = this.state;
+    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves} = this.state;
     return (
       <div className="app">
         <div className="app__body">
@@ -199,6 +212,7 @@ export default class App extends Component {
             elementsToHighlight={elementsToHighlight}
             newGame={this.newGame}
             autoplay={this.autoplay}
+            moves = {moves}
             gameMessage = {gameMessage}
             changeSetting={this.changeSetting}/>
         </div>

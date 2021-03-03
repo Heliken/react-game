@@ -3,8 +3,14 @@ import React, {Component} from 'react';
 import './game.css';
 
 export default class Game extends Component {
+  shakeTile(e) {
+    e.target.classList.add('game__field-section--shake');
+    setTimeout(function(){
+      e.target.classList.remove('game__field-section--shake')
+    },200)
+  }
   render(){
-    const {gameField, changeScreen, updateField, gameMessage, gameEnded, elementsToHighlight, autoplay } = this.props;
+    const {gameField, changeScreen, updateField, gameMessage, gameEnded, elementsToHighlight, autoplay, moves } = this.props;
     const fields = gameField.map((item,index) => {
       const canClick = !item ;
       let additionalClass='';
@@ -24,7 +30,7 @@ export default class Game extends Component {
       return (
         <div className={`game__field-section${additionalClass}`}
           key={index} 
-          onClick={canClick && !gameEnded ? () => updateField(index) : undefined}
+          onClick={canClick && !gameEnded ? () => updateField(index) : this.shakeTile}
           ></div>
       )
     })
@@ -33,10 +39,9 @@ export default class Game extends Component {
         <div className="game__header">
           <div className="game__back underline" onClick={()=>{changeScreen('menu');}}>Back</div>
           <div className="game__autoplay underline" onClick={()=>{autoplay();}}>Autoplay</div>
-          <div className="game-stats game__time">
-            <span className=""></span>
+          <div className="game__stats">
+            <div className="game__moves ">{moves}</div>
           </div>
-          <div className="game__moves "></div>
         </div>
         <div className="game__field">
           {fields}
