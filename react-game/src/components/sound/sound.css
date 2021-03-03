@@ -1,0 +1,25 @@
+.sounds{
+  position: absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  display: flex;
+}
+.sounds-block{
+  font-size: 12px;
+  line-height:120%;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  transition: filter .3s ease-in-out;
+}
+
+.sounds-block--disabled{
+  filter:grayscale(1);
+}
+.sounds-block:last-child{
+  margin-right:0;
+}
+.sounds-block__range{
+  width:50px;
+}

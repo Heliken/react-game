@@ -1,0 +1,11 @@
+.hotkeys{
+  position: absolute;
+  top:10px;
+  left:10px;
+  z-index: 1;
+  font-size: 12px;
+  line-height:120%;
+  transition:background-color .3s ease-in-out;
+  background-color: var(--secondary-color);
+  padding: 10px;
+}

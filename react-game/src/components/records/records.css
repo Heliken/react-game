@@ -1,0 +1,10 @@
+.records{
+  width:100%;
+  margin-bottom: 10px;
+  border-spacing: 0;
+}
+.records td{
+
+  padding:4px 0;
+  border-bottom: 1px solid var(--accent-color);
+}
