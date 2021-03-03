@@ -11,16 +11,16 @@ export default class Game extends Component {
       let additionalClass;
       switch(item){
         case 'X':
-          additionalClass = 'game__field-section--x'
+          additionalClass = ' game__field-section--x'
           break;
         case 'O':
-          additionalClass = 'game__field-section--o'  
+          additionalClass = ' game__field-section--o'  
           break;
         default:
           additionalClass = '';
       }
       return (
-        <div className={`game__field-section ${additionalClass}`}
+        <div className={`game__field-section${additionalClass}`}
           key={index} 
           onClick={canClick && !gameEnded ? () => updateField(index) : undefined}
           ></div>
@@ -29,7 +29,11 @@ export default class Game extends Component {
     return(
       <div className="game">
         <div className="game__header">
-          <div className="game__back" onClick={()=>{changeScreen('menu');}}>Back</div>
+          <div className="game__back underline" onClick={()=>{changeScreen('menu');}}>Back</div>
+          <div className="game-stats game__time">
+            <span class=""></span>
+          </div>
+          <div className="game__moves "></div>
         </div>
         <div className="game__field">
           {fields}

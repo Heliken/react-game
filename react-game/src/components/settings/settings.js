@@ -37,7 +37,9 @@ export default class Settings extends Component {
             changeSetting={changeSetting}
           />
         </div>
-        <div className="menu__unit" onClick={()=> changeScreen('menu')}>Back</div>
+        <div className="menu__unit">
+          <span className="underline" onClick={()=> changeScreen('menu')}>Back</span>
+        </div>
       </div>
     )
   }
