@@ -4,6 +4,8 @@ import Footer from '../footer';
 import Menu from '../menu';
 import Hotkeys from '../hotkeys';
 import vocabulary from '../vocabulary';
+import effect from '../sound/effect.wav';
+import musicLink from '../sound/music.mp3';
 
 import './app.css';
 
@@ -29,7 +31,7 @@ export default class App extends Component {
       currentPlayer:'X',
       field:new Array(9).fill(null),
       records:[],
-      music:1,
+      music:.2,
       effects:1,
     }
     const savedState = JSON.parse(localStorage.getItem('heliken-tic-tac-toe-data'));
@@ -41,6 +43,7 @@ export default class App extends Component {
     })
   }
   componentDidMount() {
+    this.addAudio();
     document.addEventListener('keydown', (e) => {
       let keyCode = e.code;
       switch(keyCode){
@@ -65,7 +68,7 @@ export default class App extends Component {
     })
   }
   autoplayInterval
-
+  
   autoplay = () => {
     this.resetGame();
     if(!this.state.startedAutoplay){
@@ -119,6 +122,7 @@ export default class App extends Component {
           activeSection: val,
         }
       },() => {
+        this.effectAudio.play();
         this.updateLocalStorage();
       })
     }
@@ -235,9 +239,24 @@ export default class App extends Component {
         [name]:newValue,
       }
     },()=>{
-      console.log(this.state[name]);
+      if(name==='effects'){
+        this.effectAudio.volume = this.state.effects;
+      }
+      if(name==='music'){
+        this.musicAudio.volume = this.state.music;
+      }
       this.updateLocalStorage();
     })
+  }
+  addAudio = () => {
+    this.effectAudio = new Audio(effect);
+    this.effectAudio.volume = this.state.effects;
+
+    this.musicAudio = new Audio(musicLink);
+    this.musicAudio.volume = this.state.music;
+    this.musicAudio.autoplay = true;
+    this.musicAudio.loop = true;
+    
   }
   changeSetting = (e) => {
     this.setState(({settings}) => {
@@ -259,6 +278,7 @@ export default class App extends Component {
       if (e.target.name === 'altMode'){
         this.switchTheme();
       }
+      this.effectAudio.play();
       this.updateLocalStorage();
     })
   }
@@ -287,7 +307,7 @@ export default class App extends Component {
     }
     return null;
   }
-  
+
   render(){
     const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme, startedAutoplay, records, vocabulary, music, effects} = this.state;
     const lang = this.state.settings.lang;

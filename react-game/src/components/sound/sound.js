@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import vocabulary from '../vocabulary';
 
 import './sound.css';
 
