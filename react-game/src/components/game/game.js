@@ -3,9 +3,8 @@ import React, {Component} from 'react';
 import './game.css';
 
 export default class Game extends Component {
-  
   render(){
-    const {gameField, changeScreen, updateField, gameMessage, gameEnded, elementsToHighlight} = this.props;
+    const {gameField, changeScreen, updateField, gameMessage, gameEnded, elementsToHighlight, autoplay } = this.props;
     const fields = gameField.map((item,index) => {
       const canClick = !item ;
       let additionalClass='';
@@ -33,6 +32,7 @@ export default class Game extends Component {
       <div className="game">
         <div className="game__header">
           <div className="game__back underline" onClick={()=>{changeScreen('menu');}}>Back</div>
+          <div className="game__autoplay underline" onClick={()=>{autoplay();}}>Autoplay</div>
           <div className="game-stats game__time">
             <span className=""></span>
           </div>

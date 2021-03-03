@@ -16,6 +16,7 @@ export default class App extends Component {
       altStartWith:false,
       withAI:false,
     },
+    startedAutoplay: false,
     gameEnded: false,
     gameMessage:"Player X turn",
     elementsToHighlight:[],
@@ -33,6 +34,29 @@ export default class App extends Component {
       }
     }
   }
+
+  autoplayInterval
+
+  autoplay = () => {
+    if(!this.state.startedAutoplay){
+      this.setState(() => {
+        return{
+          startedAutoplay: true
+        }
+      })
+      this.autoplayInterval = setInterval(() => {
+        const emptyField = this.getRandomEmptyField();
+        if(emptyField || emptyField === 0){
+          this.updateField(emptyField);
+        }
+      }, 500)
+    }
+  }
+  getRandomEmptyField = () => {
+    const emptyFields = this.state.field.map((item, index) => item === null ? index: null ).filter((item)=> item !== null);
+    const randomEmptyField = emptyFields[Math.floor(Math.random() * emptyFields.length)];
+    return randomEmptyField
+  }
   newGame = () => {
     this.resetGame();
     this.changeScreen('game');
@@ -40,6 +64,7 @@ export default class App extends Component {
   resetGame = () => {
     this.setState(() => {
       return {
+        startedAutoplay:false,
         elementsToHighlight:[],
         gameEnded:false,
         hasSavedGame: false,
@@ -66,19 +91,20 @@ export default class App extends Component {
         field: newArray,
       }
     },()=>{
-      if(this.state.field.indexOf(null) < 0 ){
-        this.endGame('',true)
-      } else {
-        let winCondition = this.checkWinCondition();
-        if(!winCondition){
-          this.switchCurrentPlayer();
+      let winCondition = this.checkWinCondition();
+      if(!winCondition){
+        if(this.state.field.indexOf(null) < 0 ){
+          this.endGame('',true)
         } else {
-          this.endGame(winCondition);
+          this.switchCurrentPlayer();
         }
+      } else {
+        this.endGame(winCondition);
       }
     })
   }
   endGame = (winCondition, tie = false) => {
+    if(this.autoplayInterval) window.clearInterval(this.autoplayInterval);
     this.setState(() => {
       return {
         gameEnded:true,
@@ -172,6 +198,7 @@ export default class App extends Component {
             gameEnded={gameEnded}
             elementsToHighlight={elementsToHighlight}
             newGame={this.newGame}
+            autoplay={this.autoplay}
             gameMessage = {gameMessage}
             changeSetting={this.changeSetting}/>
         </div>
