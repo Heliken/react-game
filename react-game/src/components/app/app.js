@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import Footer from '../footer';
 import Menu from '../menu';
+import Hotkeys from '../hotkeys';
 
 import './app.css';
 
@@ -24,6 +25,7 @@ export default class App extends Component {
       startPlayer:'X',
       currentPlayer:'X',
       field:new Array(9).fill(null),
+      records:[],
       sound:{
         music:{
           mute:false,
@@ -43,7 +45,30 @@ export default class App extends Component {
       this.updateLocalStorage();
     })
   }
-
+  componentDidMount() {
+    document.addEventListener('keydown', (e) => {
+      let keyCode = e.code;
+      switch(keyCode){
+        case "KeyB":
+          if(this.state.activeSection!=='main') this.changeScreen('main');
+          break;
+        case "KeyS":
+          if(this.state.activeSection === 'main') this.changeScreen('settings');
+          break;
+        case "KeyN":
+          if(this.state.activeSection === 'main') this.newGame();
+          break;
+        case "KeyC":
+          if(this.state.activeSection==='main' && this.state.hasSavedGame) this.changeScreen('game');
+          break;  
+        case "KeyA":
+          if(this.state.activeSection==='game') this.autoplay();
+          break;
+        default:
+          break;
+      }
+    })
+  }
   autoplayInterval
 
   autoplay = () => {
@@ -227,6 +252,7 @@ export default class App extends Component {
     const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme, startedAutoplay} = this.state;
     return (
       <div className="app" data-theme={theme}>
+        <Hotkeys/>
         <div className="app__body">
           <Menu
             gameField={field}
