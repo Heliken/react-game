@@ -10,7 +10,7 @@ export default class Game extends Component {
     },200)
   }
   render(){
-    const {gameField, changeScreen, updateField, gameMessage, gameEnded, elementsToHighlight, autoplay, moves, startedAutoplay } = this.props;
+    const {gameField, changeScreen, updateField, gameMessage, gameEnded, elementsToHighlight, autoplay, moves, startedAutoplay, vocabulary, lang } = this.props;
     const fields = gameField.map((item,index) => {
       const canClick = !item ;
       let additionalClass='';
@@ -37,10 +37,10 @@ export default class Game extends Component {
     return(
       <div className="game">
         <div className="game__header">
-          <div className="game__back underline" onClick={()=>{changeScreen('menu');}}>Back</div>
-          <div className="game__autoplay underline" onClick={()=>{autoplay();}}>Autoplay</div>
+          <div className="game__back underline" onClick={()=>{changeScreen('menu');}}>{vocabulary[lang].back}</div>
+          <div className="game__autoplay underline" onClick={()=>{autoplay();}}>{vocabulary[lang].autoplay}</div>
           <div className="game__stats">
-            <div className="game__moves ">{moves}</div>
+            <div className="game__moves ">{`${vocabulary[lang].moves}: ${moves}`}</div>
           </div>
         </div>
         <div className="game__field">

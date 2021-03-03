@@ -23,24 +23,30 @@ export default class Menu extends Component {
   }
 
   render() {
-    const {activeSection, hasSavedGame, changeScreen, changeSetting, settings, gameField, updateField, newGame, gameMessage, gameEnded, elementsToHighlight, autoplay, moves, startedAutoplay, records } = this.props;
+    const {activeSection, hasSavedGame, changeScreen, changeSetting, settings, gameField, updateField, newGame, gameMessage, gameEnded, elementsToHighlight, autoplay, moves, startedAutoplay, records, vocabulary, lang } = this.props;
     let currentSection;
     switch(activeSection){
       case 'main':
         currentSection = <MainMenu 
           changeScreen={changeScreen}
           newGame={newGame}
+          vocabulary={vocabulary}
+          lang={lang}
           hasSavedGame={hasSavedGame} />
         break;
       case 'settings':
         currentSection = <Settings
           changeScreen={changeScreen}
           settings={settings}
+          vocabulary={vocabulary}
+          lang={lang}
           changeSetting={changeSetting}
         />
         break;
       case 'game':
         currentSection = <Game
+          vocabulary={vocabulary}
+          lang={lang}
           changeScreen={changeScreen}
           autoplay={autoplay}
           moves={moves}
@@ -54,11 +60,15 @@ export default class Menu extends Component {
         break;
       case 'records':
         currentSection = <Records 
+          vocabulary={vocabulary}
+          lang={lang}
           records={records}
           changeScreen={changeScreen}/>
         break;
       default:
         currentSection = <MainMenu 
+          vocabulary={vocabulary}
+          lang={lang}
           changeScreen={changeScreen}
           newGame={newGame}
           hasSavedGame={hasSavedGame} />

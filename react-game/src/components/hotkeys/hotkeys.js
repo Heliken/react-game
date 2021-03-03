@@ -4,13 +4,15 @@ import './hotkeys.css';
 
 export default class Hotkeys extends Component {
   render() {
+    const {vocabulary,lang} = this.props;
     return(
       <div className='hotkeys'>
-        <p>Continue - C</p>
-        <p>New game - N</p>
-        <p>Back - B</p>
-        <p>Autoplay - A</p>
-        <p>Settings - S</p>
+        <p>{vocabulary[lang].hotkeys}:</p>
+        <p>{vocabulary[lang].continue} - C</p>
+        <p>{vocabulary[lang].newGame} - N</p>
+        <p>{vocabulary[lang].back} - B</p>
+        <p>{vocabulary[lang].autoplay} - A</p>
+        <p>{vocabulary[lang].settings} - S</p>
       </div>
     )
   }

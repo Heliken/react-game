@@ -1,5 +1,7 @@
 const vocabulary ={
   ru:{
+    player:"Игрок",
+    hotkeys:'Хоткеи',
     newGame:'Новая игра',
     continue:"Продолжить",
     back:"Назад",
@@ -9,6 +11,7 @@ const vocabulary ={
     playerMessageTemplate:"ходит сейчас",
     tieMessageTemplate:'Это ничья!',
     winMessage:"победил!",
+    records:"Рекорды",
     table:{
       tableHeader:['№','Победитель',"Ходы"],
       tableMessage:'Пока нет данных',
@@ -24,11 +27,13 @@ const vocabulary ={
       },
       lang:{
         title:'Язык',
-        options:['en','ru']
+        options:['англ','рус']
       },
     }
   },
   en:{
+    player:'Player',
+    hotkeys:'Hotkeys',
     newGame:'New game',
     continue:"Continue",
     back:"Back",
@@ -38,6 +43,7 @@ const vocabulary ={
     playerMessageTemplate:"player turn",
     tieMessageTemplate:"It's a tie!",
     winMessage:"wins!",
+    records:"Records",
     table:{
       tableHeader:['№','Winner',"Moves"],
       tableMessage:'No data yet',
@@ -53,7 +59,7 @@ const vocabulary ={
       },
       lang:{
         title:'Language',
-        options:['англ','рус']
+        options:['en','ru']
       },
     }
   }

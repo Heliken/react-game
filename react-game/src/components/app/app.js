@@ -3,11 +3,13 @@ import React, {Component} from 'react';
 import Footer from '../footer';
 import Menu from '../menu';
 import Hotkeys from '../hotkeys';
+import vocabulary from '../vocabulary';
 
 import './app.css';
 
 export default class App extends Component {
   componentWillMount() {
+    
     const defaultState = {
       activeSection:"main",
       hasSavedGame:false,
@@ -15,12 +17,13 @@ export default class App extends Component {
       settings:{
         altMode:false,
         altStartWith:false,
-        withAI:false,
+        lang:'en',
       },
+      vocabulary:vocabulary,
       moves:0,
       startedAutoplay: false,
       gameEnded: false,
-      gameMessage:"Player X turn",
+      gameMessage:'X player turn',
       elementsToHighlight:[],
       startPlayer:'X',
       currentPlayer:'X',
@@ -110,7 +113,7 @@ export default class App extends Component {
         gameEnded:false,
         hasSavedGame: false,
         currentPlayer:this.state.startPlayer,
-        gameMessage:`Player ${this.state.startPlayer} turn`,
+        gameMessage:`${this.state.startPlayer} ${this.state.vocabulary[this.state.settings.lang].playerMessageTemplate}`,
         field: new Array(9).fill(null),
       }
     },() => {
@@ -186,7 +189,7 @@ export default class App extends Component {
         startedAutoplay: false,
         gameEnded:true,
         elementsToHighlight: tie ? [] : winCondition.combination,
-        gameMessage: tie ? 'Its a tie!' : `Player ${winCondition.winner} won!`
+        gameMessage: tie ? this.state.vocabulary[this.state.settings.lang].tieMessageTemplate : `${winCondition.winner} ${this.state.vocabulary[this.state.settings.lang].winMessage}`
       }
     },() => {
       if(!tie && winCondition){
@@ -218,7 +221,7 @@ export default class App extends Component {
     this.setState(({currentPlayer}) => {
       const nextPlayer = currentPlayer === 'X' ? 'O' : 'X';
       return{
-        gameMessage: `Player ${nextPlayer} turn`,
+        gameMessage: `${nextPlayer} ${this.state.vocabulary[this.state.settings.lang].playerMessageTemplate}`,
         currentPlayer: nextPlayer
       }
     },() => {
@@ -227,7 +230,11 @@ export default class App extends Component {
   }
   changeSetting = (e) => {
     this.setState(({settings}) => {
-      let newSettings = {...settings,[e.target.name]:e.target.checked}
+      let newVal = e.target.checked;
+      if(e.target.name==='lang'){
+        newVal = e.target.checked ? 'ru' : 'en'
+      }
+      let newSettings = {...settings,[e.target.name]: newVal}
       return {
         settings:newSettings
       }
@@ -271,10 +278,12 @@ export default class App extends Component {
   }
   
   render(){
-    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme, startedAutoplay, records} = this.state;
+    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight, moves, theme, startedAutoplay, records, vocabulary} = this.state;
+    const lang = this.state.settings.lang;
     return (
       <div className="app" data-theme={theme}>
-        <Hotkeys/>
+        <Hotkeys vocabulary={vocabulary}
+            lang={lang}/>
         <div className="app__body">
           <Menu
             gameField={field}
@@ -291,6 +300,8 @@ export default class App extends Component {
             gameMessage = {gameMessage}
             startedAutoplay = {startedAutoplay}
             records={records}
+            vocabulary={vocabulary}
+            lang={lang}
             changeSetting={this.changeSetting}/>
         </div>
         <Footer />

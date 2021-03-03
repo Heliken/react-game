@@ -65,9 +65,6 @@
 .game__field-section--shake{
   animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
 }
-.game__moves:before{
-  content:"Moves: ";
-}
 @keyframes shake {
   10%, 90% {
     transform: translate3d(-1px, 0, 0);

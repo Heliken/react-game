@@ -4,16 +4,16 @@ import './records.css';
 
 export default class Records extends Component {
   render() {
-    const {records, changeScreen} = this.props;
+    const {records, changeScreen, vocabulary,lang} = this.props;
     let elements;
     if(records.length<1){
-      elements = <tr><td style={{textAlign: 'center'}} colSpan={3}>No data yet</td></tr>
+      elements = <tr><td style={{textAlign: 'center'}} colSpan={3}>{vocabulary[lang].table.tableMessage}</td></tr>
     } else {
       elements = records.map((item,index) => {
         return(
           <tr key={index}>
             <td>{index + 1}</td>
-            <td>{`Player ${item.player}`}</td>
+            <td>{`${vocabulary[lang].player} ${item.player}`}</td>
             <td>{item.moves}</td>
           </tr>
         )
@@ -24,9 +24,9 @@ export default class Records extends Component {
         <table className='records'>
           <thead>
             <tr>
-              <td>№</td>
-              <td>Winner</td>
-              <td>Moves</td>
+              <td>{vocabulary[lang].table.tableHeader[0]}</td>
+              <td>{vocabulary[lang].table.tableHeader[1]}</td>
+              <td>{vocabulary[lang].table.tableHeader[2]}</td>
             </tr>
           </thead>
           <tbody>
