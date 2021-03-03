@@ -1,12 +1,16 @@
 .game{
   width:100%;
 }
+.game__header{
+  margin-bottom: 10px;
+}
 .game__field{
   display:grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 20px;
   grid-row-gap:20px;
+  margin-bottom: 10px;
 }
 .game__field-section{
   background-color: #fff;

@@ -10,6 +10,7 @@ export default class App extends Component {
   state={
     activeSection:"main",
     hasSavedGame:false,
+    theme:'light',
     settings:{
       altMode:false,
       altStartWith:false,
@@ -46,7 +47,7 @@ export default class App extends Component {
     })
   }
   changeScreen = (val) => {
-    this.setState(({activeSection}) => {
+    this.setState(() => {
       return {
         activeSection: val,
       }
@@ -71,7 +72,7 @@ export default class App extends Component {
     })
   }
   endGame = (winner) => {
-    this.setState(({gameMessage}) => {
+    this.setState(() => {
       return {
         gameEnded:true,
         gameMessage: `Player ${winner} won!`
@@ -79,7 +80,7 @@ export default class App extends Component {
     })
   }
   switchStartPlayer = () => {
-    this.setState(({startPlayer}) => {
+    this.setState(() => {
       let newStartPlayer = this.state.settings.altStartWith ? 'O' : 'X';
       return{
         startPlayer: newStartPlayer,
@@ -88,6 +89,15 @@ export default class App extends Component {
       }
     },()=>{
       this.switchCurrentPlayer();
+    })
+  }
+  switchTheme = () => {
+    this.setState(({theme}) => {
+      return {
+        theme: theme === 'light' ? 'dark' : 'light'
+      }
+    }, () => {
+      document.documentElement.setAttribute('data-theme',this.state.theme);
     })
   }
   switchCurrentPlayer = () => {
@@ -111,6 +121,9 @@ export default class App extends Component {
       }
       if (e.target.name === 'altStartWith'){
         this.switchStartPlayer();
+      }
+      if (e.target.name === 'altMode'){
+        this.switchTheme();
       }
     })
   }
@@ -138,7 +151,7 @@ export default class App extends Component {
   }
   
   render(){
-    const {activeSection, settings, field, hasSavedGame, gameMessage,gameEnded} = this.state;
+    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded} = this.state;
     return (
       <div className="app">
         <div className="app__body">

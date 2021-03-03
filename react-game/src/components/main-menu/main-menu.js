@@ -7,10 +7,16 @@ export default class MainMenu extends Component {
     return(
       <div className="menu__wrap">
         {hasSavedGame &&
-          <div className="menu__unit" onClick={() => { changeScreen('game') }}>Continue</div>
+          <div className="menu__unit" >
+            <span className='underline' onClick={() => { changeScreen('game') }}>Continue</span>
+          </div>
         }
-        <div className="menu__unit" onClick={() => { newGame() }}>New game</div>
-        <div className="menu__unit" onClick={() => { changeScreen('settings') }}>Settings</div>
+        <div className="menu__unit">
+          <span className='underline' onClick={() => { newGame() }}>New game</span>
+        </div>
+        <div className="menu__unit" >
+          <span className="underline" onClick={() => { changeScreen('settings') }}>Settings</span>
+        </div>
       </div>
     )
   }

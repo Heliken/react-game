@@ -1,3 +1,16 @@
+
+:root {
+  --primary-color: #ffffff;
+  --secondary-color: #cdcecd;
+  --accent-color: #1e63b8;
+  --font-color: #434444;
+}
+[data-theme="dark"] {
+  --primary-color: #434444;
+  --secondary-color: #222222;
+  --accent-color: #1e63b8;
+  --font-color: #ffffff;
+}
 *{
   margin:0;
   padding:0;
@@ -5,9 +18,27 @@
   outline:none;
 }
 .app{
+  transition:background-color .3s ease-in-out, color .3s ease-in-out;
+  background-color: var(--primary-color);
+  color:var(--font-color);
   min-height:100vh;
   display: flex;
   flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  line-height: 120%;
+}
+.app:fullscreen .menu__fullscreen:before{
+  transform:translate(-30%,30%)rotate(180deg);
+}
+.app:fullscreen .menu__fullscreen:hover:before{
+  transform:rotate(180deg);
+}
+.app:fullscreen .menu__fullscreen:after{
+  transform:translate(30%,-30%)rotate(0deg);
+}
+.app:fullscreen .menu__fullscreen:hover:after{
+  transform:translate(0,0)rotate(0deg);
 }
 .container{
   max-width: 1400px;
@@ -18,4 +49,21 @@
   flex:1;
   display: flex;
   
+}
+.underline{
+  cursor: pointer;
+  position: relative;
+}
+.underline:before{
+  width:100%;
+  content:"";
+  position: absolute;
+  bottom:-2px;
+  height:2px;
+  transform:scaleX(0);
+  transition:transform .3s ease-in-out,background-color .3s ease-in-out;
+  background-color: var(--font-color);
+}
+.underline:hover:before{
+  transform:scale(1);
 }

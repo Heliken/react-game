@@ -10,6 +10,7 @@ export default function Footer() {
           <a className='footer__link' href='https://github.com/Heliken' target='_blank' rel="noreferrer">
             <img src={githubIcon} alt='github'/>
           </a>
+          <div className='footer__year '>2021</div>
           <a className='footer__link' href='https://rs.school/' target='_blank' rel="noreferrer">
             <img src={RsIcon} alt='rolling scopes'/>
           </a>

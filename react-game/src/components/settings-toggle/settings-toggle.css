@@ -1,5 +1,9 @@
-settings-toggle__title{
+.settings-toggle{
+}
+.settings-toggle__title{
   text-align: center;
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 .settings-toggle__body{
   display: flex;
@@ -11,13 +15,14 @@ settings-toggle__title{
   margin:0 10px;
   height:20px;
   border-radius: 10px;
-  border:1px solid #000;
+  border:1px solid var(--accent-color);
   position: relative;
   width:38px;
   display: flex;
   cursor: pointer;
 }
 .settings-toggle__option{
+  white-space: nowrap;
   flex:1;
 }
 .settings-toggle__option:first-child{
@@ -42,6 +47,6 @@ settings-toggle__title{
   transition:transform .1s ease-in-out;
   width: 16px;
   height:16px;
-  background-color: #000;
+  background-color: var(--accent-color);
   border-radius: 100%;
 }

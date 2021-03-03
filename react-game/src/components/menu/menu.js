@@ -7,6 +7,20 @@ import './menu.css';
 
 
 export default class Menu extends Component {
+  toggleFullScreen = () => {
+    let elem = document.querySelector(".app");
+    elem.requestFullscreen = elem.requestFullscreen || elem.mozRequestFullscreen || elem.msRequestFullscreen || elem.webkitRequestFullscreen;
+    if (!document.fullscreenElement) {
+      elem.requestFullscreen().then({}).catch(err => {
+        alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+
   render() {
     const {activeSection, hasSavedGame, changeScreen, changeSetting, settings, gameField, updateField, newGame, gameMessage, gameEnded} = this.props;
     let currentSection;
@@ -41,6 +55,7 @@ export default class Menu extends Component {
     }
     return(
       <div className="menu">
+        <div className="menu__fullscreen" onClick={() =>{this.toggleFullScreen()}}></div>
         {currentSection}
       </div>
     )
