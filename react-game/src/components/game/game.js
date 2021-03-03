@@ -5,19 +5,22 @@ import './game.css';
 export default class Game extends Component {
   
   render(){
-    const {gameField, changeScreen, updateField, gameMessage, gameEnded} = this.props;
+    const {gameField, changeScreen, updateField, gameMessage, gameEnded, elementsToHighlight} = this.props;
     const fields = gameField.map((item,index) => {
       const canClick = !item ;
-      let additionalClass;
+      let additionalClass='';
       switch(item){
         case 'X':
-          additionalClass = ' game__field-section--x'
+          additionalClass += ' game__field-section--x'
           break;
         case 'O':
-          additionalClass = ' game__field-section--o'  
+          additionalClass += ' game__field-section--o'  
           break;
         default:
-          additionalClass = '';
+          additionalClass += '';
+      }
+      if(gameEnded && elementsToHighlight.indexOf(index) < 0) {
+        additionalClass += ' game__field-section--semi-hidden';
       }
       return (
         <div className={`game__field-section${additionalClass}`}
@@ -31,7 +34,7 @@ export default class Game extends Component {
         <div className="game__header">
           <div className="game__back underline" onClick={()=>{changeScreen('menu');}}>Back</div>
           <div className="game-stats game__time">
-            <span class=""></span>
+            <span className=""></span>
           </div>
           <div className="game__moves "></div>
         </div>

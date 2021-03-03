@@ -16,7 +16,7 @@
 .game__field-section{
   background-color: var(--primary-color);
   position: relative;
-  transition: background-color .3s ease-in-out,transform .3s ease-in-out;
+  transition: background-color .3s ease-in-out,transform .3s ease-in-out, opacity .3s ease-in-out;
 }
 [class='game__field-section']:hover{
   transform:scale(1.05);
@@ -40,6 +40,11 @@
   transform:scale(0);
   transition:transform .3s cubic-bezier(.17,.67,.43,1.61);
 
+}
+.game__field-section--semi-hidden{
+  opacity: .5;
+  transform:scale(.9);
+  pointer-events: none;
 }
 .game__field-section--x:after{
   transform:scale(1);

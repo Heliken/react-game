@@ -18,6 +18,7 @@ export default class App extends Component {
     },
     gameEnded: false,
     gameMessage:"Player X turn",
+    elementsToHighlight:[],
     startPlayer:'X',
     currentPlayer:'X',
     field:new Array(9).fill(null),
@@ -39,8 +40,10 @@ export default class App extends Component {
   resetGame = () => {
     this.setState(() => {
       return {
+        elementsToHighlight:[],
         gameEnded:false,
         hasSavedGame: false,
+        currentPlayer:this.state.startPlayer,
         gameMessage:`Player ${this.state.startPlayer} turn`,
         field: new Array(9).fill(null),
       }
@@ -63,19 +66,24 @@ export default class App extends Component {
         field: newArray,
       }
     },()=>{
-      let winCondition = this.checkWinCondition();
-      if(!winCondition){
-        this.switchCurrentPlayer();
+      if(this.state.field.indexOf(null) < 0 ){
+        this.endGame('',true)
       } else {
-        this.endGame(winCondition);
+        let winCondition = this.checkWinCondition();
+        if(!winCondition){
+          this.switchCurrentPlayer();
+        } else {
+          this.endGame(winCondition);
+        }
       }
     })
   }
-  endGame = (winner) => {
+  endGame = (winCondition, tie = false) => {
     this.setState(() => {
       return {
         gameEnded:true,
-        gameMessage: `Player ${winner} won!`
+        elementsToHighlight: tie ? [] : winCondition.combination,
+        gameMessage: tie ? 'Its a tie!' : `Player ${winCondition.winner} won!`
       }
     })
   }
@@ -84,11 +92,7 @@ export default class App extends Component {
       let newStartPlayer = this.state.settings.altStartWith ? 'O' : 'X';
       return{
         startPlayer: newStartPlayer,
-        gameMessage: `Player ${newStartPlayer} turn`
-
       }
-    },()=>{
-      this.switchCurrentPlayer();
     })
   }
   switchTheme = () => {
@@ -144,14 +148,17 @@ export default class App extends Component {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (field[a] && field[a] === field[b] && field[a] === field[c]) {
-        return field[a];
+        return {
+          combination:[a, b, c],
+          winner: field[a]
+        };
       }
     }
     return null;
   }
   
   render(){
-    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded} = this.state;
+    const {activeSection, settings, field, hasSavedGame, gameMessage, gameEnded, elementsToHighlight} = this.state;
     return (
       <div className="app">
         <div className="app__body">
@@ -163,6 +170,7 @@ export default class App extends Component {
             changeScreen={this.changeScreen}
             settings={settings}
             gameEnded={gameEnded}
+            elementsToHighlight={elementsToHighlight}
             newGame={this.newGame}
             gameMessage = {gameMessage}
             changeSetting={this.changeSetting}/>
